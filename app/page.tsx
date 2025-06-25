@@ -38,7 +38,7 @@ export default function Page() {
   React.useEffect(() => {
     const fetchArtist = async () => {
       const { results, total } = await api.getMany<Gift>(
-        `artists/${artistId}/supporters?take=4`
+        `artists/${artistId}/supporters?take=20`
       );
       setGifts(results);
       setTotalGifts(total);
@@ -47,7 +47,7 @@ export default function Page() {
   }, []);
 
   const giftsTotal = React.useMemo(() => {
-    return gifts.reduce((total, gift) => total + (gift.amount || 0), 0);
+    return gifts?.reduce((total, gift) => total + (gift.amount || 0), 0) ?? [];
   }, [gifts]);
 
   if (!artist) {
