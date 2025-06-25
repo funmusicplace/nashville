@@ -8,6 +8,9 @@ import React from "react";
 
 type Artist = {
   id: number;
+  properties: {
+    colors: { primary: string };
+  };
 };
 
 export type Gift = {
@@ -22,6 +25,7 @@ const artistId = process.env.NEXT_PUBLIC_ARTIST_ID ?? 1;
 export default function Page() {
   const [artist, setArtist] = React.useState<Artist | null>(null);
   const [gifts, setGifts] = React.useState<Gift[]>([]);
+  const [totalGifts, setTotalGifts] = React.useState<number>();
 
   React.useEffect(() => {
     const fetchArtist = async () => {
@@ -33,10 +37,11 @@ export default function Page() {
 
   React.useEffect(() => {
     const fetchArtist = async () => {
-      const { result } = await api.get<Gift[]>(
-        `artists/${artistId}/supporters`
+      const { results, total } = await api.getMany<Gift>(
+        `artists/${artistId}/supporters?take=4`
       );
-      setGifts(result);
+      setGifts(results);
+      setTotalGifts(total);
     };
     fetchArtist();
   }, []);
@@ -52,9 +57,9 @@ export default function Page() {
   return (
     <main className="flex min-h-screen flex-col p-10">
       <div className="mt-4 flex grow flex-col gap-4 md:flex-row">
-        <div className="flex flex-col gap-6 rounded-lg px-6 pt-20">
+        <div className="flex flex-col gap-6 rounded-lg px-6 pt-20 flex-2">
           <p className="text-xl text-gray-800 underline bold md:text-4xl md:leading-normal">
-            Get us to Nashville.
+            Get us to Nashville
           </p>
           <p className={`text-xl text-gray-800 md:text-3xl md:leading-normal`}>
             we’re on a panel in nashville, but we need money to get there!
@@ -65,8 +70,8 @@ export default function Page() {
             giftsLength={gifts.length}
           />
         </div>
-        <div className="flex flex-col items-center gap-6 rounded-lg px-6 pt-20 flex-1">
-          <DonateFeed artist={artist} gifts={gifts} />
+        <div className="flex flex-col items-center gap-6 rounded-lg px-6 pt-20 flex-1 min-w-[300px]">
+          <DonateFeed artist={artist} gifts={gifts} totalGifts={totalGifts} />
         </div>
       </div>
     </main>
