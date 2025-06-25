@@ -17,7 +17,7 @@ export type Gift = {
   datePurchased: string;
 };
 
-const artistId = process.env.ARTIST_ID ?? 1;
+const artistId = process.env.NEXT_PUBLIC_ARTIST_ID ?? 1;
 
 export default function Page() {
   const [artist, setArtist] = React.useState<Artist | null>(null);
