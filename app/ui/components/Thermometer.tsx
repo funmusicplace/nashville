@@ -1,11 +1,11 @@
 function Thermometer({
   current,
   goal,
-  giftsLength,
+  totalSupporters,
 }: {
   current: number;
   goal: number;
-  giftsLength?: number;
+  totalSupporters?: number;
 }) {
   const percent = Math.min((current / goal) * 100, 100);
   return (
@@ -18,7 +18,7 @@ function Thermometer({
               ${current.toLocaleString()}
             </span>
           </span>
-          <span className="italic">from {giftsLength} supporters</span>
+          <span className="italic">from {totalSupporters} supporters</span>
         </div>
         <div className="ml-2 text-xl ">
           of <span className="font-bold">${goal.toLocaleString()}</span> goal

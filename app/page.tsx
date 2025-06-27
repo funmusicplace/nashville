@@ -26,6 +26,8 @@ export default function Page() {
   const [artist, setArtist] = React.useState<Artist | null>(null);
   const [gifts, setGifts] = React.useState<Gift[]>([]);
   const [totalGifts, setTotalGifts] = React.useState<number>();
+  const [totalSupporters, setTotalSupporters] = React.useState<number>();
+  const [totalAmount, setTotalAmount] = React.useState<number>();
 
   React.useEffect(() => {
     const fetchArtist = async () => {
@@ -37,18 +39,20 @@ export default function Page() {
 
   React.useEffect(() => {
     const fetchArtist = async () => {
-      const { results, total } = await api.getMany<Gift>(
-        `artists/${artistId}/supporters?take=20`
-      );
+      const { results, total, totalAmount, totalSupporters } =
+        (await api.getMany<Gift>(`artists/${artistId}/supporters?take=20`)) as {
+          results: Gift[];
+          total: number;
+          totalAmount: number;
+          totalSupporters: number;
+        };
       setGifts(results);
       setTotalGifts(total);
+      setTotalSupporters(totalSupporters);
+      setTotalAmount(totalAmount);
     };
     fetchArtist();
   }, []);
-
-  const giftsTotal = React.useMemo(() => {
-    return gifts?.reduce((total, gift) => total + (gift.amount || 0), 0) ?? [];
-  }, [gifts]);
 
   if (!artist) {
     return null;
@@ -64,11 +68,13 @@ export default function Page() {
           <p className={`text-xl text-gray-800 md:text-3xl md:leading-normal`}>
             we’re on a panel in nashville, but we need money to get there!
           </p>
-          <Thermometer
-            current={giftsTotal / 100}
-            goal={3000}
-            giftsLength={gifts.length}
-          />
+          {totalAmount && (
+            <Thermometer
+              current={totalAmount / 100}
+              goal={3000}
+              totalSupporters={totalSupporters}
+            />
+          )}
         </div>
         <div className="flex flex-col items-center gap-6 rounded-lg px-6 pt-20 flex-1 min-w-[300px]">
           <DonateFeed artist={artist} gifts={gifts} totalGifts={totalGifts} />
