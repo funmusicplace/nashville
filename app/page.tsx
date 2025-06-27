@@ -61,7 +61,7 @@ export default function Page() {
   return (
     <main className="flex min-h-screen flex-col p-10">
       <div className="mt-4 flex grow flex-col gap-4 md:flex-row">
-        <div className="flex flex-col gap-6 rounded-lg px-6 pt-20 flex-2">
+        <div className="flex flex-col gap-6 rounded-lg px-6 pt-20 flex-1">
           <p className="text-xl text-gray-800 underline bold md:text-4xl md:leading-normal">
             Get us to Nashville
           </p>
@@ -76,7 +76,7 @@ export default function Page() {
             />
           )}
         </div>
-        <div className="flex flex-col items-center gap-6 rounded-lg px-6 pt-20 flex-1 min-w-[300px]">
+        <div className="flex flex-col items-center gap-6 rounded-lg px-6 pt-20 flex-0 min-w-[350px]">
           <DonateFeed artist={artist} gifts={gifts} totalGifts={totalGifts} />
         </div>
       </div>
