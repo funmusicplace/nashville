@@ -33,7 +33,13 @@ const AmountButtons: React.FC<{
               />
               <label
                 htmlFor={`priceButton-${gift.value}`}
-                className="cursor-pointer mr-2 px-1 py-2 rounded-md border border-gray-300 hover:bg-gray-100"
+                className="cursor-pointer 
+                  mr-2 
+                  px-1 
+                  py-2 
+                  rounded-md 
+                  border 
+                  border-gray-300 hover:bg-foreground-light"
                 style={{
                   backgroundColor: amount === gift.value ? "#f0f0f0" : "white",
                 }}

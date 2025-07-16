@@ -37,7 +37,14 @@ const DonateButton: React.FC<DonateButtonProps> = ({ children, artist }) => {
         type="button"
         data-modal-target="default-modal"
         data-modal-toggle="default-modal"
-        className="text-xl px-6 py-3 bg-pink-600 hover:bg-pink-700 text-white font-semibold rounded-lg shadow-md transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-pink-400 focus:ring-opacity-50"
+        className="text-xl 
+        px-6 
+        py-3 
+        bg-primary-default 
+        hover:bg-primary-dark 
+        text-white font-semibold rounded-lg shadow-md transition-colors 
+        duration-200 focus:outline-none focus:ring-2 
+        focus:ring-pink-400 focus:ring-opacity-50"
         onClick={toggleModal}
       >
         {children || "Donate"}

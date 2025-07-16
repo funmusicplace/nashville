@@ -21,6 +21,13 @@ export type Gift = {
 };
 
 const artistId = process.env.NEXT_PUBLIC_ARTIST_ID ?? 1;
+const goal = process.env.NEXT_PUBLIC_GOAL ?? 3000;
+
+let root = window.document.documentElement;
+
+const updateColors = (colors: { primary: string }) => {
+  root.style.setProperty("--primary-color", colors.primary);
+};
 
 export default function Page() {
   const [artist, setArtist] = React.useState<Artist | null>(null);
@@ -40,7 +47,7 @@ export default function Page() {
   React.useEffect(() => {
     const fetchArtist = async () => {
       const { results, total, totalAmount, totalSupporters } =
-        (await api.getMany<Gift>(`artists/${artistId}/supporters?take=20`)) as {
+        (await api.getMany<Gift>(`artists/${artistId}/supporters?take=10`)) as {
           results: Gift[];
           total: number;
           totalAmount: number;
@@ -59,19 +66,21 @@ export default function Page() {
   }
 
   return (
-    <main className="flex min-h-screen flex-col p-10">
+    <main className="flex min-h-screen flex-col p-10 max-w-7xl mx-auto">
       <div className="mt-4 flex grow flex-col gap-4 md:flex-row">
         <div className="flex flex-col gap-6 rounded-lg px-6 pt-20 flex-1">
-          <p className="text-xl text-gray-800 underline bold md:text-4xl md:leading-normal">
+          <p className="text-xl text-foreground-default underline bold md:text-4xl md:leading-normal">
             Get us to Nashville
           </p>
-          <p className={`text-xl text-gray-800 md:text-3xl md:leading-normal`}>
+          <p
+            className={`text-xl text-foreground-default md:text-3xl md:leading-normal`}
+          >
             we’re on a panel in nashville, but we need money to get there!
           </p>
           {totalAmount && (
             <Thermometer
               current={totalAmount / 100}
-              goal={3000}
+              goal={Number(goal)}
               totalSupporters={totalSupporters}
             />
           )}

@@ -20,22 +20,22 @@ const DonateFeed: React.FC<{
             <li key={idx} className="bg-white rounded p-3 shadow flex flex-col">
               <span>
                 <span className="font-semibold">Someone</span> donated{" "}
-                <span className="text-pink-700 font-bold">
+                <span className="text-primary-default font-bold">
                   {formatCurrency(gift.amount as number)}
                 </span>
               </span>
               {gift.message && (
-                <span className="text-gray-600 text-sm mt-1">
+                <span className="text-foreground-light text-sm mt-1">
                   "{gift.message}"
                 </span>
               )}
-              <span className="text-sm text-gray-600">
+              <span className="text-sm text-foreground-light">
                 {formatDate({ date: gift.datePurchased })}
               </span>
             </li>
           ))}
           {totalGifts > gifts.length && (
-            <li className="text-gray-500 text-sm">
+            <li className="text-foreground-light text-sm">
               and {totalGifts - gifts.length} more gifts...
             </li>
           )}
