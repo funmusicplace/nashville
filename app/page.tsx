@@ -23,12 +23,6 @@ export type Gift = {
 const artistId = process.env.NEXT_PUBLIC_ARTIST_ID ?? 1;
 const goal = process.env.NEXT_PUBLIC_GOAL ?? 3000;
 
-let root = window.document.documentElement;
-
-const updateColors = (colors: { primary: string }) => {
-  root.style.setProperty("--primary-color", colors.primary);
-};
-
 export default function Page() {
   const [artist, setArtist] = React.useState<Artist | null>(null);
   const [gifts, setGifts] = React.useState<Gift[]>([]);
