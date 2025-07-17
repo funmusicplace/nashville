@@ -36,7 +36,14 @@ export type Artist = {
   id: number;
   defaultPlatformFee?: number;
   properties: {
-    colors: { primary: string };
+    colors: { primary: string } | null;
+    fundraising?: {
+      title: string;
+      description: string;
+      imageUrl?: string;
+      sinceDate?: string;
+      goalAmount?: number;
+    };
   };
   user: {
     currency: string;
@@ -51,8 +58,9 @@ export type Gift = {
 };
 
 const artistId = process.env.NEXT_PUBLIC_ARTIST_ID ?? 1;
-const goal = process.env.NEXT_PUBLIC_GOAL ?? 3000;
+const goal = Number(process.env.NEXT_PUBLIC_GOAL ?? 3000);
 const campaignStartDate = "2025-07-01";
+const campaignTitle = "Help Mirlo Artists Get to Nashville";
 
 export default function Page() {
   const [artist, setArtist] = React.useState<Artist | null>(null);
@@ -61,36 +69,39 @@ export default function Page() {
   const [totalSupporters, setTotalSupporters] = React.useState<number>();
   const [totalAmount, setTotalAmount] = React.useState<number>(0);
   const [description, setDescription] = React.useState<string>("");
+  const [goalAmount, setGoalAmount] = React.useState<number>(Number(goal));
+  const [title, setTitle] = React.useState<string>("A Fundraiser!");
 
-  React.useEffect(() => {
-    const fetchArtist = async () => {
-      const { result } = await api.get<Artist>(`artists/${artistId}`);
-      setArtist(result);
-    };
-    fetchArtist();
+  const fetchArtist = React.useCallback(async () => {
+    const { result } = await api.get<Artist>(`artists/${artistId}`);
+    setArtist(result);
+    const sinceDate =
+      result.properties.fundraising?.sinceDate ?? campaignStartDate;
+    setGoalAmount(result.properties.fundraising?.goalAmount ?? goal);
+    setTitle(result.properties.fundraising?.title ?? campaignTitle);
+    const { results, total, totalAmount, totalSupporters } =
+      (await api.getMany<Gift>(
+        `artists/${artistId}/supporters?sinceDate=${sinceDate}`
+      )) as {
+        results: Gift[];
+        total: number;
+        totalAmount: number;
+        totalSupporters: number;
+      };
+    setGifts(results);
+    setTotalGifts(total);
+    setTotalSupporters(totalSupporters);
+    setTotalAmount(totalAmount);
+    const processedContent = await remark()
+      .use(html)
+      .process(
+        result.properties.fundraising?.description ?? descriptionMarkdown
+      );
+    const contentHtml = processedContent.toString();
+    setDescription(contentHtml);
   }, []);
 
   React.useEffect(() => {
-    const fetchArtist = async () => {
-      const { results, total, totalAmount, totalSupporters } =
-        (await api.getMany<Gift>(
-          `artists/${artistId}/supporters?sinceDate=${campaignStartDate}`
-        )) as {
-          results: Gift[];
-          total: number;
-          totalAmount: number;
-          totalSupporters: number;
-        };
-      setGifts(results);
-      setTotalGifts(total);
-      setTotalSupporters(totalSupporters);
-      setTotalAmount(totalAmount);
-      const processedContent = await remark()
-        .use(html)
-        .process(descriptionMarkdown);
-      const contentHtml = processedContent.toString();
-      setDescription(contentHtml);
-    };
     fetchArtist();
   }, []);
 
@@ -103,11 +114,11 @@ export default function Page() {
       <div className="mt-4 flex grow flex-col gap-4 md:flex-row">
         <div className="flex flex-col gap-6 rounded-lg px-6 pt-20 flex-1 mb-20">
           <h1 className="text-xl text-foreground-default bold md:text-4xl md:leading-normal">
-            Help Mirlo Artists Get to Nashville
+            {title}
           </h1>
           <Thermometer
             current={totalAmount / 100}
-            goal={Number(goal)}
+            goal={goalAmount}
             totalSupporters={totalSupporters}
           />
           <div
