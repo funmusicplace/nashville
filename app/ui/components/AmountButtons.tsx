@@ -12,7 +12,8 @@ const defaultGifts: { value: number }[] = [
 const AmountButtons: React.FC<{
   amount: number;
   setAmount: (amount: number) => void;
-}> = ({ amount, setAmount }) => {
+  currency?: string;
+}> = ({ amount, setAmount, currency }) => {
   const [isOther, setIsOther] = React.useState(false);
   return (
     <>
@@ -25,7 +26,7 @@ const AmountButtons: React.FC<{
                 value={gift.value}
                 id={`priceButton-${gift.value}`}
                 className="hidden"
-                defaultChecked={amount === gift.value}
+                checked={amount === gift.value}
                 onChange={() => {
                   setAmount(gift.value);
                   setIsOther(false);
@@ -33,18 +34,21 @@ const AmountButtons: React.FC<{
               />
               <label
                 htmlFor={`priceButton-${gift.value}`}
-                className="cursor-pointer 
+                className={`cursor-pointer 
                   mr-2 
                   px-1 
                   py-2 
                   rounded-md 
                   border 
-                  border-gray-300 hover:bg-foreground-light"
-                style={{
-                  backgroundColor: amount === gift.value ? "#f0f0f0" : "white",
-                }}
+                  duration-200
+                  border-gray-300 
+                    ${
+                      amount === gift.value
+                        ? "bg-primary-default text-background-default"
+                        : "hover:bg-background-dark"
+                    }`}
               >
-                {formatCurrency((gift.value as number) * 100)}
+                {formatCurrency((gift.value as number) * 100, currency)}
               </label>
             </li>
           );

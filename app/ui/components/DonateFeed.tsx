@@ -2,14 +2,13 @@
 import DonateButton from "./DonateButton";
 import React from "react";
 import { formatCurrency, formatDate } from "@/app/lib/utils";
-import { Gift } from "@/app/page";
+import { Artist, Gift } from "@/app/page";
 
 const DonateFeed: React.FC<{
-  artist: { id: number };
+  artist: Artist;
   totalGifts?: number;
   gifts: Gift[];
 }> = ({ artist, gifts, totalGifts = 0 }) => {
-  console.log("totalGifts:", totalGifts);
   return (
     <div className="w-full flex flex-col items-stretch gap-3">
       <DonateButton artist={artist} />
@@ -21,7 +20,7 @@ const DonateFeed: React.FC<{
               <span>
                 <span className="font-semibold">Someone</span> donated{" "}
                 <span className="text-primary-default font-bold">
-                  {formatCurrency(gift.amount as number)}
+                  {formatCurrency(gift.amount as number, artist.user.currency)}
                 </span>
               </span>
               {gift.message && (

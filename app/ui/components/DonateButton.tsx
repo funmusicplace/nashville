@@ -4,10 +4,12 @@ import React from "react";
 import Modal from "@/app/ui/components/Modal";
 import AmountButtons from "./AmountButtons";
 import api from "@/app/lib/api";
+import { formatCurrency } from "@/app/lib/utils";
+import { Artist } from "@/app/page";
 
 type DonateButtonProps = {
   children?: React.ReactNode;
-  artist: { id: number };
+  artist: Artist;
 };
 
 const DonateButton: React.FC<DonateButtonProps> = ({ children, artist }) => {
@@ -27,7 +29,6 @@ const DonateButton: React.FC<DonateButtonProps> = ({ children, artist }) => {
       // email,
     });
     window.location.assign(response.redirectUrl);
-    // Here you would typically handle the donation logic, e.g., API call
     setIsOpen(false);
   }, [artist, donationAmount]);
 
@@ -50,7 +51,21 @@ const DonateButton: React.FC<DonateButtonProps> = ({ children, artist }) => {
         {children || "Donate"}
       </button>
       <Modal isOpen={isOpen} onClose={toggleModal} onConfirm={onConfirmation}>
-        <AmountButtons amount={donationAmount} setAmount={setDonationAmount} />
+        <AmountButtons
+          amount={donationAmount}
+          setAmount={setDonationAmount}
+          currency={artist.user.currency}
+        />
+        <div>
+          <p className="text-sm text-foreground-light mt-2">
+            {artist.defaultPlatformFee ?? 10}% (
+            {formatCurrency(
+              donationAmount * (artist.defaultPlatformFee ?? 10),
+              artist.user.currency
+            )}
+            ) of your donation goes to support Mirlo.
+          </p>
+        </div>
       </Modal>
     </>
   );

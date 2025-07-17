@@ -9,7 +9,7 @@ const AmountInput: React.FC<{
         htmlFor="price"
         className="block text-sm/6 font-medium text-gray-900"
       >
-        Support with
+        Enter a custom amount
       </label>
       <div className="mt-2">
         <div className="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 has-[input:focus-within]:outline-2 has-[input:focus-within]:-outline-offset-2 has-[input:focus-within]:outline-indigo-600">

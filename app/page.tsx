@@ -32,10 +32,14 @@ other outlets. Alex has also worked in the solidarity economy movement as
 To help them get there, we've set up this fundraiser page to invite donations to cover the costs for them and their bandmates to participate in Americanafest. We welcome donations of any size, and if you aren't able to contribute cash right now, please share the link with your networks. Thanks so much for your support!
 `;
 
-type Artist = {
+export type Artist = {
   id: number;
+  defaultPlatformFee?: number;
   properties: {
     colors: { primary: string };
+  };
+  user: {
+    currency: string;
   };
 };
 
@@ -48,13 +52,14 @@ export type Gift = {
 
 const artistId = process.env.NEXT_PUBLIC_ARTIST_ID ?? 1;
 const goal = process.env.NEXT_PUBLIC_GOAL ?? 3000;
+const campaignStartDate = "2025-07-01";
 
 export default function Page() {
   const [artist, setArtist] = React.useState<Artist | null>(null);
   const [gifts, setGifts] = React.useState<Gift[]>([]);
   const [totalGifts, setTotalGifts] = React.useState<number>();
   const [totalSupporters, setTotalSupporters] = React.useState<number>();
-  const [totalAmount, setTotalAmount] = React.useState<number>();
+  const [totalAmount, setTotalAmount] = React.useState<number>(0);
   const [description, setDescription] = React.useState<string>("");
 
   React.useEffect(() => {
@@ -68,7 +73,9 @@ export default function Page() {
   React.useEffect(() => {
     const fetchArtist = async () => {
       const { results, total, totalAmount, totalSupporters } =
-        (await api.getMany<Gift>(`artists/${artistId}/supporters?take=10`)) as {
+        (await api.getMany<Gift>(
+          `artists/${artistId}/supporters?sinceDate=${campaignStartDate}`
+        )) as {
           results: Gift[];
           total: number;
           totalAmount: number;
@@ -98,13 +105,11 @@ export default function Page() {
           <h1 className="text-xl text-foreground-default bold md:text-4xl md:leading-normal">
             Help Mirlo Artists Get to Nashville
           </h1>
-          {totalAmount && (
-            <Thermometer
-              current={totalAmount / 100}
-              goal={Number(goal)}
-              totalSupporters={totalSupporters}
-            />
-          )}
+          <Thermometer
+            current={totalAmount / 100}
+            goal={Number(goal)}
+            totalSupporters={totalSupporters}
+          />
           <div
             className="post"
             dangerouslySetInnerHTML={{ __html: description }}
