@@ -25,8 +25,8 @@ export default function RootLayout({
           href="https://mirlo.space/favicon-16x16.png"
         ></link>
         <meta name="twitter:card" content="summary"></meta>
-        <meta property="og:site_name" content="A Fundraiser on Mirlo"></meta>
-        <meta property="og:image" content="public/hero-image.png"></meta>
+        <meta property="og:site_name" content="Get us to Nashville"></meta>
+        <meta property="og:image" content="/hero-image.png"></meta>
       </head>
       <body>{children}</body>
     </html>
