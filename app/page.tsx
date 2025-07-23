@@ -110,12 +110,17 @@ export default function Page() {
   }
 
   return (
-    <main className="flex min-h-screen flex-col p-10 max-w-7xl mx-auto">
-      <div className="mt-4 flex grow flex-col gap-4 md:flex-row">
-        <div className="flex flex-col gap-6 rounded-lg px-6 pt-20 flex-1 mb-20">
-          <h1 className="text-xl text-foreground-default bold md:text-4xl md:leading-normal">
+    <main className="flex min-h-screen flex-col p-10 max-w-7xl mx-auto px-6 ">
+      <div className="mt-4 flex grow flex-col items-start gap-4 md:flex-row relative">
+        <div className="flex flex-col gap-6 rounded-lg pt-20 flex-1 md:mb-20 lg:pr-12">
+          <h1 className="text-foreground-default font-bold text-4xl md:leading-normal">
             {title}
           </h1>
+          <img
+            src={artist.properties.fundraising?.imageUrl ?? "/hero-image.png"}
+            alt="Fundraiser Hero"
+            className="rounded-lg w-full h-auto"
+          />
           <Thermometer
             current={totalAmount / 100}
             goal={goalAmount}
@@ -125,11 +130,25 @@ export default function Page() {
             className="post"
             dangerouslySetInnerHTML={{ __html: description }}
           />
-          <DonateButton artist={artist} />
+          <div className="block hidden">
+            <DonateButton artist={artist} />
+          </div>
         </div>
-        <div className="flex flex-col items-center gap-6 rounded-lg px-6 pt-20 flex-0 min-w-[350px]">
+        <div className="sticky top-0 flex flex-col items-center rounded-lg md:pt-20 flex-0 min-w-[350px]">
           <DonateFeed artist={artist} gifts={gifts} totalGifts={totalGifts} />
         </div>
+      </div>
+      <div>
+        <p className="text-foreground-light text-sm">
+          This fundraiser is powered by{" "}
+          <a
+            href="https://mirlo.space"
+            className="text-primary-default underline font-bold hover:text-primary-dark focus:text-primary-dark"
+          >
+            Mirlo
+          </a>
+          .
+        </p>
       </div>
     </main>
   );

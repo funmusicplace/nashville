@@ -14,7 +14,8 @@ type DonateButtonProps = {
 
 const DonateButton: React.FC<DonateButtonProps> = ({ children, artist }) => {
   const [isOpen, setIsOpen] = React.useState(false);
-  const [donationAmount, setDonationAmount] = React.useState<number>(20);
+  const [donationAmount, setDonationAmount] = React.useState<number>(25);
+  const [message, setMessage] = React.useState<string>("");
 
   const toggleModal = () => {
     setIsOpen(!isOpen);
@@ -22,15 +23,16 @@ const DonateButton: React.FC<DonateButtonProps> = ({ children, artist }) => {
 
   const onConfirmation = React.useCallback(async () => {
     const response = await api.post<
-      { price: number; email?: string },
+      { price: number; email?: string; message?: string },
       { redirectUrl: string }
     >(`artists/${artist.id}/tip`, {
       price: Number(donationAmount) * 100,
+      message,
       // email,
     });
     window.location.assign(response.redirectUrl);
     setIsOpen(false);
-  }, [artist, donationAmount]);
+  }, [artist, message, donationAmount]);
 
   return (
     <>
@@ -64,6 +66,33 @@ const DonateButton: React.FC<DonateButtonProps> = ({ children, artist }) => {
               artist.user.currency
             )}
             ) of your donation goes to support Mirlo.
+          </p>
+        </div>
+        <div>
+          <label htmlFor="message" className="block">
+            Leave a message for the Nashville crew (optional)
+          </label>
+          <textarea
+            id="message"
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+            rows={3}
+            className="mt-2 w-full p-2 border border-gray-300 rounded-md"
+            placeholder="Letsgoooo!"
+          ></textarea>
+        </div>
+        <div>
+          <p className="text-sm text-foreground-light mt-2">
+            By clicking "Donate", you agree to the Mirlo{" "}
+            <a
+              href="https://mirlo.space/pages/terms"
+              className="underline"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Terms of Service
+            </a>
+            .
           </p>
         </div>
       </Modal>

@@ -26,10 +26,7 @@ export default function RootLayout({
         ></link>
         <meta name="twitter:card" content="summary"></meta>
         <meta property="og:site_name" content="A Fundraiser on Mirlo"></meta>
-        <meta
-          property="og:image"
-          content="https://mirlo.space/android-chrome-512x512.png"
-        ></meta>
+        <meta property="og:image" content="public/hero-image.png"></meta>
       </head>
       <body>{children}</body>
     </html>

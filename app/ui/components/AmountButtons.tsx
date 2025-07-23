@@ -5,8 +5,11 @@ import React from "react";
 const defaultGifts: { value: number }[] = [
   { value: 10 },
   { value: 15 },
-  { value: 20 },
   { value: 25 },
+  { value: 50 },
+  { value: 100 },
+  { value: 200 },
+  { value: 500 },
 ];
 
 const AmountButtons: React.FC<{
@@ -17,7 +20,7 @@ const AmountButtons: React.FC<{
   const [isOther, setIsOther] = React.useState(false);
   return (
     <>
-      <ul className={`mb-1 mt-2`}>
+      <ul className={`mb-1 mt-2 flex gap-2 items-start flex-wrap`}>
         {defaultGifts.map((gift) => {
           return (
             <li key={gift.value} className={"inline-block"}>
@@ -35,10 +38,10 @@ const AmountButtons: React.FC<{
               <label
                 htmlFor={`priceButton-${gift.value}`}
                 className={`cursor-pointer 
-                  mr-2 
-                  px-1 
+                  px-3 
                   py-2 
                   rounded-md 
+                  block
                   border 
                   duration-200
                   border-gray-300 
@@ -62,12 +65,12 @@ const AmountButtons: React.FC<{
             defaultChecked={isOther}
             onClick={() => {
               setIsOther(!isOther);
-              setAmount(30);
+              setAmount(amount);
             }}
           />
           <label
             htmlFor={`priceButton-other`}
-            className="cursor-pointer mr-2 px-1 py-2 rounded-md border border-gray-300 hover:bg-gray-100"
+            className="cursor-pointer block mr-2 px-3 py-2 rounded-md border border-gray-300 hover:bg-gray-100"
             style={{
               backgroundColor: isOther ? "#f0f0f0" : "white",
             }}
