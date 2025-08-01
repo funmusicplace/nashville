@@ -25,7 +25,7 @@ other outlets. Alex has also worked in the solidarity economy movement as
 
 *[McKenzie Jones]()*, co-founder of [Strange Heavy](https://mirlo.space/strange-heavy) [bio and photo here]
 
-*[Sonia Erika]()*, co-founder of [Death Is A Business](https://mirlo.space/death-is-a-business) [bio and photo here]
+*[Sonia Erika](https://deathisabusiness.com/)*, co-founder of [Death Is A Business](https://mirlo.space/death-is-a-business). Death is a Business is a nomadic experimental music collective that brings together local and global artists to explore the profound connection between humanity and the natural world. They serve Mother Earth and craft immersive soundscapes that merge ancient traditions with modern technology. Death Is A Business envisions a world where music transcends mortal pleasure and wealth, empowering those who seek meaning beyond submission and domination.
 
 To help them get there, we've set up this fundraiser page to invite donations to cover the costs for them and their bandmates to participate in Americanafest. We welcome donations of any size, and if you aren't able to contribute cash right now, please share the link with your networks. Thanks so much for your support!
 `;
