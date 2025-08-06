@@ -13,7 +13,7 @@ const descriptionMarkdown = `
 Three Mirlo artists have been invited to present at Americanafest, the annual gathering of the Americana Music 
 Association that takes place in Nashville, Tennessee. The panel is called 
 Music Cooperatives: Reshaping the Industry Through Solidarity, Not 
-Exploitation and will feature four panelists:
+Exploitation and will feature three Mirlo panelists:
 
 *[Alex Rodríguez](https://alexwrodriguez.com/about/)*, co-founder of [Mirlo](https://mirlo.space/arod/releases), is also a writer, 
 organizer, and trombonist working at the confluences of music and social 
