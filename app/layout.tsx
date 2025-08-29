@@ -24,9 +24,15 @@ export default function RootLayout({
           sizes="16x16"
           href="https://mirlo.space/favicon-16x16.png"
         ></link>
-        <meta name="twitter:card" content="summary"></meta>
+        <meta name="twitter:card" content="summary_large_image"></meta>
         <meta property="og:site_name" content="Get us to Nashville"></meta>
         <meta property="og:image" content="/hero-image.png"></meta>
+        <meta property="og:image:width" content="800"></meta>
+        <meta property="og:image:height" content="400"></meta>
+        <meta
+          property="og:image:alt"
+          content="Mirlo musicians playing music in front of a locomotive."
+        ></meta>
       </head>
       <body>{children}</body>
     </html>

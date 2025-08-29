@@ -65,7 +65,16 @@ const DonateButton: React.FC<DonateButtonProps> = ({ children, artist }) => {
               donationAmount * (artist.defaultPlatformFee ?? 10),
               artist.user.currency
             )}
-            ) of your donation goes to support Mirlo.
+            ) of your donation goes towards{" "}
+            <a
+              href="https://mirlo.space/"
+              className="underline"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Mirlo's
+            </a>{" "}
+            operating costs.
           </p>
         </div>
         <div>
